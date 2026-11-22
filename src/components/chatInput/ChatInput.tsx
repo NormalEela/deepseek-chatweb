@@ -180,12 +180,6 @@ const Input = ({ sessionId }: { sessionId: string | null }) => {
               event.currentTarget.focus({ preventScroll: true })
             }
           }}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
-              event.preventDefault()
-              send()
-            }
-          }}
           onPaste={(event) => {
             const files = Array.from(event.clipboardData.files)
             if (files.length > 0) {

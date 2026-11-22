@@ -1,7 +1,6 @@
 import { useTranslate } from '../../i18n/index.js'
 import clsx from 'clsx'
 import { memo, useLayoutEffect, useRef, useState } from 'react'
-import { useIsMobile } from '../../app/viewport.js'
 import { IconEditOutline16 } from '../base/icons.js'
 import { getFileViewType, isImage } from '../../services/attachments.js'
 import { editMessage, retryUpload } from '../../services/chat/store.js'
@@ -43,7 +42,6 @@ export const UserMessage = memo(function UserMessage({
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(message.content)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const isMobile = useIsMobile()
   const canSend = !busy && (draft.trim() !== '' || message.files.length > 0)
 
   useLayoutEffect(() => {
@@ -95,11 +93,9 @@ export const UserMessage = memo(function UserMessage({
               if (event.nativeEvent.isComposing) {
                 return
               }
+              // 回车只换行；提交统一用下方按钮
               if (event.key === 'Escape') {
                 setEditing(false)
-              } else if (event.key === 'Enter' && !event.shiftKey && !event.ctrlKey && !isMobile) {
-                event.preventDefault()
-                sendEdit()
               }
             }}
           />
