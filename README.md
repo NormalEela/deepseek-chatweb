@@ -24,6 +24,8 @@ pnpm start
 
 Open `http://<server-ip>:8090` and enter the API key once when prompted. It is then stored on the server.
 
+For a step-by-step Linux deployment guide (Node/pnpm installation, systemd, nginx and HTTPS, firewall, backups, upgrades and troubleshooting), see [DEPLOY.zh-CN.md](DEPLOY.zh-CN.md) (Chinese).
+
 To accept local connections only:
 
 ```sh

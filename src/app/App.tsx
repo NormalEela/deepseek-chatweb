@@ -57,7 +57,9 @@ export const App = () => {
 
   useEffect(() => {
     document.documentElement.lang = locale
-  }, [locale])
+    // 标签页标题跟随应用名（i18n 的 appName），避免和页面里显示的标题不一致
+    document.title = t('appName')
+  }, [locale, t])
 
   // 文件数、存储空间达到上限时，附件上只显示「上传失败」，原因用 toast 说明
   useEffect(() => onUploadNotice(showToast), [])

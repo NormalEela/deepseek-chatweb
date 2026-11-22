@@ -1,0 +1,43 @@
+# chat-demo systemd 服务示例
+#
+# 安装：
+#   sudo cp deploy/chat-demo.service /etc/systemd/system/chat-demo.service
+#   sudo nano /etc/systemd/system/chat-demo.service   # 修改路径 / 用户 / 端口
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now chat-demo
+#   sudo systemctl status chat-demo --no-pager
+#
+# 详细步骤见 DEPLOY.zh-CN.md。
+
+[Unit]
+Description=chat-demo (DeepSeek chat with self-hosted backend)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 项目目录：改成服务器上的实际路径
+WorkingDirectory=/opt/chat-demo
+# 用 `command -v node` 查到的绝对路径；NodeSource 安装通常是 /usr/bin/node
+ExecStart=/usr/bin/node server/index.mjs
+
+Environment=PORT=8090
+# 只用 nginx 反向代理时改成 127.0.0.1，避免绕过 nginx 直接访问
+Environment=HOST=0.0.0.0
+# 数据目录：与项目路径保持一致
+Environment=DATA_DIR=/opt/chat-demo/data
+# 可选：由环境变量提供 Key，设置后页面中不能修改
+# Environment=DEEPSEEK_API_KEY=sk-xxxxxxxx
+
+# 建议改成普通用户；改用其他用户时先执行：
+#   sudo chown -R <用户>:<用户> /opt/chat-demo
+User=root
+Group=root
+
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

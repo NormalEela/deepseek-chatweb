@@ -24,6 +24,8 @@ pnpm start
 
 打开 `http://<服务器IP>:8090`。首次进入时按提示填写一次 API Key，之后会保存在服务器上。
 
+详细部署步骤（Node/pnpm 安装、systemd 常驻、nginx 反向代理与 HTTPS、端口与防火墙、数据备份、升级和排错）见 [DEPLOY.zh-CN.md](DEPLOY.zh-CN.md)。
+
 如果只想让本机访问：
 
 ```sh
